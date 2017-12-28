@@ -5,7 +5,7 @@
 
 This repository contains the necessary files to create a *dockerized* version of honeytrap.
 
-This dockerized version is part of the **[Multi-Honeypots]** of Deutsche Telekom AG.
+This dockerized version is part of the **[Multi-Honeypots]** of douwanhu.
 For this setup, honeytrap is configured to use the logattacker module only.
 
 The `Dockerfile` contains the blueprint for the dockerized honeytrap and will be used to setup the docker image.  
