@@ -1,33 +1,14 @@
 # dockerized honeytrap
 
 
-[honeytrap](https://github.com/armedpot/honeytrap) is a low-interaction honeypot daemon for observing attacks against network services. In contrast to other honeypots, which often focus on malware collection, honeytrap aims for catching the initial exploit – It collects and further processes attack traces.
+[honeytrap](https://github.com/armedpot/honeytrap) 是一个低交互蜜罐，主要抓取利用TCP UDP网络协议<br>
+的攻击。所有捕获到的威胁数据存储至/data/honeytrap/ <br>
+/data/honeytrap/log/attackers.json 记录所有攻击过程<br>
+/data/honeytrap/attacks 下保存网络包文件<br>
+/data/honeytrap/downloads 保存下载的恶意文件<br>
+为避免磁盘空间占用过大，多蜜罐系统默认24小时重启一次，且重启后清除<br>
+/data/下的数据，并在清除之前将所有数据导入到已部署的MySQL数据库中<br>
 
-This repository contains the necessary files to create a *dockerized* version of honeytrap.
+附在公网上90天Honeytrap捕获到的威胁数据统计报告dashboard<br>
+![Honeytrap Dashboard]((https://github.com/liyihoohoolab/hotpot/blob/master/docker-honeytrap/doc/dashboard.png)
 
-This dockerized version is part of the **[Multi-Honeypots]** of douwanhu.
-For this setup, honeytrap is configured to use the logattacker module only.
-
-The `Dockerfile` contains the blueprint for the dockerized honeytrap and will be used to setup the docker image.  
-
-The `honeytrap.conf` is tailored to fit the Multi-Honeypots environment.
-
-The `supervisord.conf` is used to start honeytrap under supervision of supervisord.
-
-In case you want to run the dockerized honeytrap independently, you must modify the config files to match your environment and rebuild the docker image.
-
-Using systemd, copy the `systemd/honeytrap.service` to `/etc/systemd/system/honeytrap.service` and start using
-
-```
-systemctl enable honeytrap
-systemctl start honeytrap
-```
-
-This will make sure that the docker container is started with the appropriate rights and iptables forwards are implemented. Further, it autostarts during boot.
-In the T-Pot setup, some ports are excluded as they need to be reserved for other honeypot daemons running in parallel.
-
-By default all data will be stored in `/data/honeytrap/` until the honeypot service will be restarted which is by default every 24 hours. If you want to keep data persistently simply edit the ``service`` file, find the line that contains ``clean.sh`` and set the option from ``off`` to ``on``. Be advised to establish some sort of log management if you wish to do so.
-
-# Honeytrap Dashboard
-
-![Honeytrap Dashboard](https://raw.githubusercontent.com/douwanhu/docker-honeytrap/master/doc/dashboard.png)
